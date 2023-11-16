@@ -2,6 +2,18 @@ version: '3.8'
 
 services:
 
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend/app:/usr/src/app/app
+      - ./frontend/public:/usr/src/app/public
+    restart: always
+    ports:
+      - 3000:3000
+
   backend:
     container_name: backend
     build:
