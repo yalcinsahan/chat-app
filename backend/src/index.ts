@@ -2,8 +2,11 @@ import express, { Express} from 'express';
 import bodyParser from 'body-parser';
 import { createServer } from "http";
 import { mySocket } from './socket';
+import dotenv from 'dotenv'
 
 import userRoutes from './routes/user-routes';
+
+dotenv.config()
 
 const app: Express = express();
 const PORT: number = 8000;
@@ -20,7 +23,7 @@ app.use('/users', userRoutes);
 const httpServer = createServer(app);
 
 httpServer.listen(PORT, () => {
-  console.log('server started');
+  console.log('server started')
 });
 
 mySocket(httpServer);
