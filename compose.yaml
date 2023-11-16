@@ -31,8 +31,7 @@ services:
       timeout: 20s
       retries: 10  
     volumes:
-      - "./db:/docker-entrypoint-initdb.d" 
-      - my_data:/var/lib/mysql
+      - mysql_chatapp:/var/lib/mysql  
 
   phpmyadmin:
     container_name: phpmyadmin
@@ -47,4 +46,4 @@ services:
       - PMA_PORT=3306
 
 volumes:
-  my_data:
+  mysql_chatapp:

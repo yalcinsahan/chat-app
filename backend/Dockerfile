@@ -11,8 +11,7 @@ RUN --mount=type=bind,source=package.json,target=package.json \
     npm ci --include=dev
 USER root
 COPY . .
-RUN npx prisma generate
-CMD npm run dev
+CMD source migrate-and-start.sh
 
 FROM base as prod
 ENV NODE_ENV production

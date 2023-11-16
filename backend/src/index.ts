@@ -1,5 +1,7 @@
 import express, { Express} from 'express';
 import bodyParser from 'body-parser';
+import { createServer } from "http";
+import { mySocket } from './socket';
 
 import userRoutes from './routes/user-routes';
 
@@ -15,15 +17,10 @@ app.use(
 
 app.use('/users', userRoutes);
 
-const startServer = async (): Promise<void> => {
-  try {
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
-  } catch (error) {
-    console.error('Error during server startup:', error);
-    process.exit(1); 
-  }
-};
+const httpServer = createServer(app);
 
-startServer();
+httpServer.listen(PORT, () => {
+  console.log('server started');
+});
+
+mySocket(httpServer);
