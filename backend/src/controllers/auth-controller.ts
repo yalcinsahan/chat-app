@@ -16,7 +16,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
   });
 
   if (checkCredentials) {
-    const token = jwt.sign({ username }, `${process.env.JWT_SECRET_KEY}`, { expiresIn: '1h' });
+    const token = jwt.sign({ username:checkCredentials.username,id:checkCredentials.id }, `${process.env.JWT_SECRET_KEY}`, { expiresIn: '7d' });
     res.json({ token });
   } else {
     res.status(401).json({ message: 'Invalid credentials' });
@@ -30,9 +30,9 @@ export const signup = async (req: Request, res: Response): Promise<any> => {
 
   // Check if username already exists
   const existingUser = await prisma.user.findUnique({
-    where: {
-      username: username
-    },
+    where:{
+      username: username,
+    }
   });
 
   if (existingUser) {

@@ -23,6 +23,9 @@ const Signup = () => {
         body: JSON.stringify({ username, password }),
       });
 
+      console.log(response);
+      
+
       if (response.ok) {
         // Handle successful signup, redirect or show success message
         setErrorMessage('');

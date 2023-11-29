@@ -1,17 +1,41 @@
 import { Server, Socket } from 'socket.io';
+import jwt from 'jsonwebtoken'
 
 export const mySocket = (httpServer: any) => {
-  
-  const io = new Server(httpServer);
 
-  io.on('connection', (socket: Socket) => {
-    console.log('socket connected');
+  const io = new Server(httpServer, {
+    cors: {
+      origin: "http://localhost:3000",
+      methods: ["GET", "POST"]
+    }});
 
-    socket.on("addition", (arg1: number, arg2: number, callback: (result: { sum: number }) => void) => {
-      console.log({ arg1, arg2 });
-      callback({
-        sum: Number(arg1) + Number(arg2)
-      });
+  const users: any = {};
+
+  io.on('connection', (socket) => {
+    console.log('a user connected');
+
+    socket.on('join', (token) => {
+
+      const decoded = jwt.decode(token, { json: true });
+      
+      users[socket.id] = decoded?.id;
+      io.emit('updateUsers', Object.values(users));      
+    });
+
+    socket.on('privateMessage', ({ sender, receiver, message }) => {
+      
+      const receiverId = Object.keys(users).find(key => users[key] == receiver);
+
+      const decoded = jwt.decode(sender, { json: true });
+      if (receiverId) {        
+        io.to(receiverId).emit('privateMessage', { sender: decoded?.username, message });
+      }
+    });
+
+    socket.on('disconnect', () => {
+      delete users[socket.id];
+      io.emit('updateUsers', Object.values(users));
     });
   });
+
 };

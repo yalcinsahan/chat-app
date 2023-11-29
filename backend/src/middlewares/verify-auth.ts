@@ -20,7 +20,7 @@ export const verifyToken = (req: AuthenticatedRequest, res: Response, next: Next
       return res.status(401).json({ error: 'Token is invalid' });
     }
     // Add 'user' property to the request
-    req.user = decoded as { username: string };
+    req.user = decoded as { username: string,id:number };
     next();
   });
 };

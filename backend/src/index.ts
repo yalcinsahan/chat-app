@@ -7,6 +7,9 @@ import cors from 'cors';
 import './types'
 
 import authRoutes from './routes/auth-routes';
+import conversationRoutes from './routes/conversation-routes';
+import messageRoutes from './routes/message-routes';
+import userRoutes from  './routes/user-routes';
 
 dotenv.config()
 
@@ -22,6 +25,11 @@ app.use(
 ); 
 
 app.use('/auth', authRoutes);
+app.use('/conversation', conversationRoutes);
+app.use('/message', messageRoutes);
+app.use('/user', userRoutes);
+
+
 
 const httpServer = createServer(app);
 
