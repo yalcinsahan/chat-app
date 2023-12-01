@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
-export const login = async (req: Request, res: Response): Promise<void> => {
+export const login = async (req: Request, res: Response): Promise<void> => { 
 
   const { username, password } = req.body;
 
@@ -17,7 +17,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
   if (checkCredentials) {
     const token = jwt.sign({ username:checkCredentials.username,id:checkCredentials.id }, `${process.env.JWT_SECRET_KEY}`, { expiresIn: '7d' });
-    res.json({ token });
+    res.json({ token,user: {username: checkCredentials.username,id: checkCredentials.id,avatar: checkCredentials.avatar} });
   } else {
     res.status(401).json({ message: 'Invalid credentials' });
   }
@@ -26,7 +26,8 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
 export const signup = async (req: Request, res: Response): Promise<any> => {
 
-  const { username, password }: User = req.body;
+  const { username, password, avatar }: User = req.body;
+  
 
   // Check if username already exists
   const existingUser = await prisma.user.findUnique({
@@ -44,6 +45,7 @@ export const signup = async (req: Request, res: Response): Promise<any> => {
       data: {
         username: username,
         password: password,
+        avatar: avatar
       },
     })
 

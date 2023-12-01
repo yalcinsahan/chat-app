@@ -35,6 +35,7 @@ const Login = () => {
 
         // Store the token in local storage or state
         localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify( data.user ));
 
         // Redirect or perform other actions upon successful login
         router.push('/');
