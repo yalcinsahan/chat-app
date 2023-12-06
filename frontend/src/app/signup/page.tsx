@@ -17,7 +17,7 @@ const Signup = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8000/auth/signup', {
+      const response = await fetch(`${process.env.apiUrl}/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ const Signup = () => {
         <form onSubmit={handleSubmit}>
 
         <div className='relative w-[100px] h-[100px] m-auto flex items-center justify-center'>
-          <Image style={!avatar ? {padding:'4px'} : {}} className='rounded-full object-cover border-4 border-solid border-blue-300' src={avatar ? avatar : "/profile.png"} fill={true} alt='profile'/>
+          <Image style={!avatar ? {padding:'4px'} : {}} className='rounded-full object-cover' src={avatar ? avatar : "/profile.png"} fill={true} alt='profile'/>
 
           <div className='absolute top-0 right-0'>
           <div className='relative min-w-[32px] min-h-[32px]'>

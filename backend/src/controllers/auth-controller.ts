@@ -28,6 +28,8 @@ export const signup = async (req: Request, res: Response): Promise<any> => {
 
   const { username, password, avatar }: User = req.body;
   
+  console.log(username,password,avatar);
+  
 
   // Check if username already exists
   const existingUser = await prisma.user.findUnique({

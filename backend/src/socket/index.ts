@@ -5,11 +5,11 @@ export const mySocket = (httpServer: any) => {
 
   const io = new Server(httpServer, {
     cors: {
-      origin: "http://localhost:3000",
+      origin: "*",
       methods: ["GET", "POST"]
     }});
 
-  const users: any = {};
+  const users: any = {}; 
 
   io.on('connection', (socket) => {
     console.log('a user connected');

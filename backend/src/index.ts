@@ -14,10 +14,10 @@ import userRoutes from  './routes/user-routes';
 dotenv.config()
 
 const app: Express = express();
-const PORT: number = 8000;
+const PORT: number = 5000;
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit:'50mb'}));
 app.use(
   bodyParser.urlencoded({
     extended: true,
@@ -28,7 +28,6 @@ app.use('/auth', authRoutes);
 app.use('/conversation', conversationRoutes);
 app.use('/message', messageRoutes);
 app.use('/user', userRoutes);
-
 
 
 const httpServer = createServer(app);

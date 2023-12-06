@@ -10,9 +10,7 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1",
     "prisma": "^5.5.2",
-    "socket.io": "^4.7.2"
-  },
-  "devDependencies": {
+    "socket.io": "^4.7.2",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.8",
     "@types/multer": "^1.4.11",
@@ -22,12 +20,15 @@
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   },
+  "devDependencies": {
+  },
   "name": "chat-backend",
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
     "test": "jest",
-    "dev": "nodemon --exec ts-node --legacy-watch src/index.ts"
+    "dev": "nodemon --exec ts-node --legacy-watch src/index.ts",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",

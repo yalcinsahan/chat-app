@@ -32,7 +32,7 @@ export default function Leftbar() {
 
     if (search === '') {
       const fetchUsers = async () => {
-        const res = await fetch('http://localhost:8000/user/all')
+        const res = await fetch(`${process.env.apiUrl}/user/all`)
         const { users } = await res.json();
         setUsers(users);
       }
@@ -41,7 +41,7 @@ export default function Leftbar() {
     }
     else {
       const fetchBySearchText = async () => {
-        const res = await fetch(`http://localhost:8000/user/search/${search}`)
+        const res = await fetch(`${process.env.apiUrl}/user/search/${search}`)
         const { users } = await res.json();
         setUsers(users);
       }
@@ -59,7 +59,15 @@ export default function Leftbar() {
         <div className='relative w-[70px] h-[70px] flex items-center'>
           <Image style={!hostUser?.avatar ? { padding: '4px' } : {}} className='rounded-full object-cover border-4 border-solid border-green-500' src={hostUser?.avatar ? hostUser?.avatar : "/profile.png"} fill={true} alt='profile' />
         </div>
-        <h1 className="text-center text-2xl font-bold ml-4">{hostUser?.username}</h1>
+        {hostUser ? (
+          <h1 className="text-center text-2xl font-bold ml-4">{hostUser?.username}</h1>
+        ) :(
+          <div className="ml-4 flex">
+            <Link href="/login" className="text-blue-500">login</Link>
+            <span className="mx-1">or</span>
+            <Link href="/signup" className="text-blue-500">signup</Link>
+          </div>
+        )}
       </div>
 
       <input

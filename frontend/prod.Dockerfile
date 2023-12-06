@@ -1,41 +1,7 @@
-# Development Stage
-FROM node:18-alpine AS dev
-
-WORKDIR /usr/src/app
-
-# Install dependencies based on the preferred package manager
-COPY . .
-RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i; \
-  else echo "Warning: Lockfile not found. It is recommended to commit lockfiles to version control." && yarn install; \
-  fi
-
-# Only uncomment this block if you are developing this project on windows
-# ENV NODE_ENV=development
-# ENV CHOKIDAR_USEPOLLING=true
-# ENV WATCHPACK_POLLING=true  
-
-# Next.js telemetry configuration
-# ENV NEXT_TELEMETRY_DISABLED 1
-
-# Note: Don't expose ports here, Compose will handle that for us
-
-# Start Next.js in development mode based on the preferred package manager
-CMD \
-  if [ -f yarn.lock ]; then yarn dev; \
-  elif [ -f package-lock.json ]; then npm run dev; \
-  elif [ -f pnpm-lock.yaml ]; then pnpm dev; \
-  else yarn dev; \
-  fi
-
-
-# Production Stage
-FROM node:18-alpine AS prod
+FROM node:18-alpine AS base
 
 # Step 1. Rebuild the source code only when needed
-FROM prod AS builder
+FROM base AS builder
 
 WORKDIR /app
 
@@ -74,7 +40,7 @@ RUN \
 # Note: It is not necessary to add an intermediate step that does a full copy of `node_modules` here
 
 # Step 2. Production image, copy all the files and run next
-FROM prod AS runner
+FROM base AS runner
 
 WORKDIR /app
 
