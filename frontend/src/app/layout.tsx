@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Leftbar from '../components/leftbar'
+import dynamic from 'next/dynamic'
+const Leftbar = dynamic(() => import('../components/leftbar'), { ssr: false })
 
 const inter = Inter({ subsets: ['latin'] })
 

@@ -60,6 +60,9 @@ export default function Chat() {
 
           setMessages(data.messages);
 
+          console.log("eşittir: ",data.messages);
+          
+
         } else {
           // Handle error response (e.g., unauthorized access)
           console.error('Error:', response.statusText);
@@ -181,7 +184,7 @@ export default function Chat() {
       socket.off('privateMessage', handlePrivateMessage); // Clean up the event listener when component unmounts
     };
   }, [messages]);
-
+  
 
   return (
     <div className="bg-blue-100 rounded-lg shadow-md relative h-screen overflow-y-scroll">

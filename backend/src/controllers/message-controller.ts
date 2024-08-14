@@ -15,7 +15,7 @@ export const create = async (req: any, res: Response): Promise<void> => {
         receiverId: receiverId,
         text: text
       }
-  });
+  });  
   
   res.status(201).json({ message: 'New message created!', createdMessage: newMessage });
   } catch (error) {
@@ -31,7 +31,8 @@ export const fetchAllMessages = async (req: any, res: Response): Promise<void> =
         where:{
           conversationId: parseInt(req.params.id)
         }
-      });
+      });      
+
       res.status(201).json({ message: 'messages have been fetched successfully', messages });
 
   } catch (error) {

@@ -6,8 +6,10 @@ import Link from "next/link";
 import { User } from "../types/types";
 import Image from "next/image";
 
+
 export default function Leftbar() {
 
+  const [loading,setLoading] = useState(true);
   const [hostUser, setHostUser] = useState<User | null>(null);
   const [users, setUsers] = useState<User[]>([])
   const [search, setSearch] = useState('');
@@ -35,6 +37,8 @@ export default function Leftbar() {
         const res = await fetch(`${process.env.apiUrl}/user/all`)
         const { users } = await res.json();
         setUsers(users);
+
+        setLoading(false);
       }
 
       fetchUsers()
@@ -55,7 +59,13 @@ export default function Leftbar() {
   return (
     <div className="bg-gray-100 px-2 py-4 border-r border-gray-300 h-screen">
 
-      <div className="flex items-center">
+      {loading ?  (
+        <div className="flex items-center">
+          loading...
+        </div>
+      ):(
+        <div>
+        <div className="flex items-center">
         <div className='relative w-[70px] h-[70px] flex items-center'>
           <Image style={!hostUser?.avatar ? { padding: '4px' } : {}} className='rounded-full object-cover border-4 border-solid border-green-500' src={hostUser?.avatar ? hostUser?.avatar : "/profile.png"} fill={true} alt='profile' />
         </div>
@@ -97,7 +107,9 @@ export default function Leftbar() {
             </Link>
           )
         ))}
-      </div>
+      </div></div>
+      )}
+      
     </div>
 
   )
